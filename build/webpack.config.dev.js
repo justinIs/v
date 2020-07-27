@@ -1,7 +1,14 @@
 const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin  = require('mini-css-extract-plugin')
+// const CopyWebpackPlugin = require('copy-webpack-plugin')
+// const path = require('path')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+
+// function resolve (dir) {
+//     return path.join(__dirname, '..', dir)
+// }
 
 module.exports = {
     mode: 'development',
@@ -18,7 +25,11 @@ module.exports = {
         rules: [{
             test: /\.vue$/,
             loader: 'vue-loader',
-        },{
+        }, {
+            test: /\.(js|vue)$/,
+            use: 'eslint-loader',
+            enforce: 'pre'
+        }, {
             test: /\.js$/,
             loader: 'babel-loader',
             exclude: file => (
@@ -28,7 +39,7 @@ module.exports = {
         }, {
             test: /\.styl(us)?$/,
             use: [
-                'vue-style-loader',
+                MiniCssExtractPlugin.loader,
                 'css-loader',
                 'stylus-loader'
             ]
@@ -38,13 +49,6 @@ module.exports = {
                 'vue-style-loader',
                 'css-loader'
             ]
-        // }, {
-        //     test: /\.scss$/,
-        //     use: [
-        //         'vue-style-loader',
-        //         'css-loader',
-        //         'sass-loader'
-        //     ]
         }]
     },
     plugins: [
@@ -55,6 +59,14 @@ module.exports = {
             template: "index.html",
             inject: true
         }),
+        new MiniCssExtractPlugin({
+            filename: 'main.css'
+        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         {from: resolve('static/img'), to: resolve('dist/static/img')}
+        //     ]
+        // }),
         new FriendlyErrorsWebpackPlugin()
     ]
 }

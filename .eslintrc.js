@@ -1,7 +1,12 @@
 module.exports = {
     root: true,
     env: {
-        node: true
+        node: true,
+        browser: true,
+        mocha: true
+    },
+    globals: {
+        expect: true
     },
     parserOptions: {
         parser: 'babel-eslint'
@@ -11,9 +16,9 @@ module.exports = {
         'eslint:recommended',
     ],
     rules: {
-        'vue/script-indent': ['error', 4, { baseIndent: 0 }],
-        'vue/html-indent': ['error', 4, { baseIndent: 0 }],
-        'vue/multiline-html-element-content-newline': ['error', {"allowEmptyLines": true}]
+        'vue/script-indent': ['error', 4, { baseIndent: 1 }],
+        'vue/html-indent': ['error', 4, { baseIndent: 1 }],
+        'vue/multiline-html-element-content-newline': 0
     },
     plugins: [
         'vue'
