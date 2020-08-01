@@ -42,7 +42,7 @@
             }
         },
         computed: {
-            time: function() {
+            time() {
                 let duration = 0
                 if (this.currentTime > this.startTime) {
                     duration = this.currentTime - this.startTime
@@ -50,12 +50,12 @@
 
                 return formatDuration(duration)
             },
-            buttonTitle: function () {
+            buttonTitle() {
                 return this.running ? 'Stop' : 'Start'
             }
         },
         methods: {
-            actionClick: function () {
+            actionClick() {
                 if (!this.running) {
                     this.running = true
                     this.startTime = new Date()
@@ -65,7 +65,7 @@
                     this.running = false
                 }
             },
-            startTimer: function (timerCount) {
+            startTimer(timerCount) {
                 setTimeout(() => {
                     if (this.running && timerCount === this.timerCount) {
                         this.currentTime = new Date()

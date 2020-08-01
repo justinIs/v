@@ -1,19 +1,27 @@
 const webpack = require('webpack')
-const { VueLoaderPlugin } = require('vue-loader');
+const {VueLoaderPlugin} = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin  = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const path = require('path')
+const path = require('path')
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+require('@babel/polyfill')
 
-// function resolve (dir) {
-//     return path.join(__dirname, '..', dir)
-// }
+function resolve(dir) {
+    return path.join(__dirname, '..', dir)
+}
 
 module.exports = {
     mode: 'development',
     resolve: {
-        extensions: [".js", ".vue"]
+        extensions: [".js", ".vue"],
+        alias: {
+            assets: resolve('assets'),
+            components: resolve('src/components'),
+            entity: resolve('src/entity'),
+            pages: resolve('src/pages'),
+            repository: resolve('src/repository')
+        }
     },
     devServer: {
         hot: true,
@@ -43,7 +51,7 @@ module.exports = {
                 'css-loader',
                 'stylus-loader'
             ]
-        },{
+        }, {
             test: /\.css$/,
             use: [
                 'vue-style-loader',

@@ -11,7 +11,11 @@
     ]
   ],
   "plugins": [
-    "@babel/plugin-syntax-dynamic-import"
+    "@babel/plugin-syntax-dynamic-import",
+    ["@babel/plugin-transform-runtime", {
+      "corejs": false,
+      "regenerator": true,
+    }]
   ],
   "env": {
     "test": {
