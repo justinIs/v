@@ -8,7 +8,7 @@
         </div>
         <div class="body">
             <div v-if="location.weather !== null">
-                {{ location.weather }}
+                {{ location.weather.summaryText() }}
             </div>
             <div v-else>
                 Loading weather...

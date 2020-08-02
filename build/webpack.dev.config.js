@@ -1,10 +1,8 @@
+const path = require("path")
 const webpack = require('webpack')
 const {VueLoaderPlugin} = require('vue-loader');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-const path = require('path')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 require('@babel/polyfill')
 
 function resolve(dir) {
@@ -14,6 +12,15 @@ function resolve(dir) {
 module.exports = {
     mode: 'development',
     devtool: 'source-map',
+    target: 'web',
+    entry: {
+        main: ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', './src/index.js']
+    },
+    output: {
+        path: path.join(__dirname, '../dist'),
+        publicPath: '/',
+        filename: '[name].js'
+    },
     resolve: {
         extensions: [".js", ".vue"],
         alias: {
@@ -23,19 +30,6 @@ module.exports = {
             pages: resolve('src/pages'),
             repository: resolve('src/repository')
         }
-    },
-    // devServer: {
-    //     hot: true,
-    //     watchOptions: {
-    //         poll: true
-    //     },
-    //     port: 8080,
-    //     host: 'localhost',
-    // },
-    entry: {
-        app: [
-            './src/index.js'
-        ]
     },
     module: {
         rules: [{
@@ -65,6 +59,18 @@ module.exports = {
                 'vue-style-loader',
                 'css-loader'
             ]
+        }, {
+            // Loads the javacript into html template provided.
+            // Entry point is set below in HtmlWebPackPlugin in Plugins
+            test: /\.html$/,
+            use: [
+                {
+                    loader: "html-loader"
+                }
+            ]
+        }, {
+            test: /\.(png|svg|jpg|gif)$/,
+            use: ['file-loader']
         }]
     },
     plugins: [
@@ -72,16 +78,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: "index.html",
             template: "index.html",
-            inject: true
+            inject: true,
+            excludeChunks: ['server']
         }),
         new MiniCssExtractPlugin({
             filename: 'main.css'
         }),
-        // new CopyWebpackPlugin({
-        //     patterns: [
-        //         {from: resolve('static/img'), to: resolve('dist/static/img')}
-        //     ]
-        // }),
-        new FriendlyErrorsWebpackPlugin()
+        new webpack.HotModuleReplacementPlugin()
     ]
 }
