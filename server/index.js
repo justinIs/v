@@ -3,10 +3,16 @@ const express = require('express')
 const multer = require('multer')
 const mulitpart = multer()
 
+const morgan = require('morgan')
+
+require('dotenv').config()
+
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const webpackConfig = require('../build/webpack.dev.config.js')
+
+const routesFactory = require('./routes')
 
 const app = express()
 const PORT = process.env.PORT || 8080
@@ -25,7 +31,11 @@ if (IS_DEVELOPMENT) {
     app.use(webpackHotMiddleware(compiler))
 }
 
+app.use(morgan('dev'))
+
 app.use(express.static('./dist'))
+
+app.use(routesFactory(process.env.OW_API_KEY))
 
 app.get('/userInfo', (req, res) => {
     res.json({weather_key: 'asdf'})
