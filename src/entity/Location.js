@@ -7,5 +7,13 @@ export default class Location {
     constructor(title, coordinates) {
         this.title = title
         this.coordinates = coordinates
+        this.weather = null
+    }
+
+    /**
+     * @param {Weather} weather
+     */
+    setWeather(weather) {
+        this.weather = weather
     }
 }

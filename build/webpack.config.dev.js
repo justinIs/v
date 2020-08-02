@@ -13,6 +13,7 @@ function resolve(dir) {
 
 module.exports = {
     mode: 'development',
+    devtool: 'source-map',
     resolve: {
         extensions: [".js", ".vue"],
         alias: {

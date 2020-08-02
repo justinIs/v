@@ -24,7 +24,9 @@
     import LocationComponent from 'components/GoCoords/LocationComponent'
     import Coordinates from 'entity/Coordinates'
     import Location from 'entity/Location'
-    import { mapState } from 'vuex'
+    import { createNamespacedHelpers } from 'vuex'
+
+    const { mapState } = createNamespacedHelpers('locations')
 
     export default {
         name: "GoCoords",
@@ -38,9 +40,9 @@
             }
         },
         computed: {
-            ...mapState([
-                'locations'
-            ])
+            ...mapState({
+                locations: state => state.locations
+            })
         },
         methods: {
             tryAddLocation() {
@@ -54,7 +56,7 @@
                 }
 
                 const location = new Location(this.titleStr, coords)
-                this.$store.dispatch('addLocation', location)
+                this.$store.dispatch('locations/addLocation', location)
                 this.titleStr = ''
                 this.coordsStr = ''
             },
@@ -78,7 +80,7 @@
                 return new Coordinates(latitude, longitude)
             },
             removeLocation(index) {
-                this.$store.dispatch('removeLocation', index)
+                this.$store.dispatch('locations/removeLocation', index)
             }
         }
     }
