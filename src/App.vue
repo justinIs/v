@@ -32,6 +32,9 @@
             }, {
                 name: 'Coords',
                 path: '/coords'
+            }, {
+                name: 'LiveStream',
+                path: '/livestream'
             }]
         }),
         computed: {

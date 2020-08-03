@@ -33,9 +33,18 @@ if (IS_DEVELOPMENT) {
 
 app.use(morgan('dev'))
 
+app.use(express.json())
+
 app.use(express.static('./dist'))
 
-app.use(routesFactory(process.env.OW_API_KEY))
+app.use(routesFactory.openWeatherRoutes(process.env.OW_API_KEY))
+
+const {
+    OT_API_KEY,
+    OT_API_SECRET,
+    OT_SESSION_ID
+} = process.env
+app.use(routesFactory.openTokRoutes(OT_API_KEY, OT_API_SECRET, OT_SESSION_ID))
 
 app.get('/userInfo', (req, res) => {
     res.json({weather_key: 'asdf'})

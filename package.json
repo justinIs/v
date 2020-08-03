@@ -47,6 +47,7 @@
     "jest-serializer-vue": "^2.0.2",
     "mini-css-extract-plugin": "^0.9.0",
     "multer": "^1.4.2",
+    "opentok": "^2.10.0",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "vue-jest": "^3.0.6",
@@ -62,6 +63,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.0",
+    "@opentok/client": "^2.17.7",
     "axios": "^0.19.2",
     "lodash": "^4.17.19",
     "morgan": "^1.10.0",
